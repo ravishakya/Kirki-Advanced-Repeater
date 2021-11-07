@@ -15,6 +15,11 @@ jQuery(document).ready(function(){
 			this.removeImage();
 			this.repeaterActiveCallback();
 			this.initializeDatePicker( ".kar_date.datepicker:not(.kar_hide)" );
+			this.initializeTimepicker( '.kar_time_hr:not(.kar_hide),.kar_time_min:not(.kar_hide)' );
+		},
+
+		initializeTimepicker : function( selector ){
+			jQuery( selector ).select2();
 		},
 
 		initializeDatePicker : function( selector ){
@@ -400,6 +405,13 @@ jQuery(document).ready(function(){
 				this.checkActiveCallbackToHideShow( this, id );
 			}.bind(this));
 
+			// For select2 timepicker
+			jQuery(document).on( 'select2:select select2:unselect select2-removed', '.kar_time_hr, .kar_time_min', function(e){
+				id = '#' + jQuery( e.target ).closest('li.customize-control').attr('id');
+				this.sortValues( jQuery( e.target ).closest('.kar_wrapper') ); // Save the values
+				this.checkActiveCallbackToHideShow( this, id );
+			}.bind(this));
+
 			// For select2 fontawesome
 			jQuery(document).on( 'select2:select', '.kar_fontawesome', function(e){
 				id = '#' + jQuery( e.target ).closest('li.customize-control').attr('id');
@@ -466,6 +478,12 @@ jQuery(document).ready(function(){
 				// Initialize select2 on new repeater
 				var dropdown_select = jQuery( e.target ).prevAll('.kar_wrapper').find('.kar_repeater_section:last select.kar_select');
 				this.initializeSelect2( dropdown_select );
+
+				// Initialize select2 timepicker on new repeater
+				var dropdown_select_hr = jQuery( e.target ).prevAll('.kar_wrapper').find('.kar_repeater_section:last select.kar_time_hr');
+				this.initializeTimepicker( dropdown_select_hr );
+				var dropdown_select_min = jQuery( e.target ).prevAll('.kar_wrapper').find('.kar_repeater_section:last select.kar_time_min');
+				this.initializeTimepicker( dropdown_select_min );
 
 				// Initialize select2 fontawesome on new repeater
 				var dropdown_select = jQuery( e.target ).prevAll('.kar_wrapper').find('.kar_repeater_section:last select.kar_fontawesome');
@@ -568,6 +586,12 @@ jQuery(document).ready(function(){
 
 						case 'select':
 							toStoreValue[index][key] = jQuery(e2).find('.kar_select').val();
+							break;
+
+						case 'time':
+						    toStoreValue[index][key] = {};
+							toStoreValue[index][key]['h'] = jQuery(e2).find('.kar_time_hr').val();
+							toStoreValue[index][key]['m'] = jQuery(e2).find('.kar_time_min').val();
 							break;
 
 						case 'fontawesome':

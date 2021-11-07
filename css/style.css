@@ -140,3 +140,17 @@ label.kar_title_description_wrapper {
     display: block;
     text-align-last: center;
 }
+
+.kar_timepicker_wrapper {
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
+.kar_timepicker_wrapper span.kar_divider {
+    padding: 0 10px;
+}
+
+.kar_timepicker_wrapper .select2-selection__rendered{
+    line-height: 26px !important;
+}

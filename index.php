@@ -3,7 +3,7 @@
 /**
 * Plugin Name: Kirki Advanced Repeater
 * Author: Ravi Shakya
-* Version: 0.1
+* Version: 0.2
 * Requires WP: 4.9
 * Requires PHP: 5.6
 * Description: Advanced Repeater
@@ -170,6 +170,11 @@ function kar_get_repeater_section( $row_label, $i, $fields, $default, $extra_cla
 					case 'date':
 						kar_get_date_field( $field , $default_value , $key , $extra_class, $show_default_value_on_add_new_repeater );
 						break;
+
+					case 'time':
+						$default_value = is_array( $default_value ) ? $default_value : array();
+						kar_get_time_field( $field , $default_value , $key , $extra_class, $show_default_value_on_add_new_repeater );
+						break;
 					
 					default:
 						// code...
@@ -180,6 +185,76 @@ function kar_get_repeater_section( $row_label, $i, $fields, $default, $extra_cla
 
 			<a class="kar_remove_section" href="javascript:void(0)">Remove</a>
 
+		</div>
+
+	</div>
+
+	<?php
+}
+
+function kar_get_hours( $selected = '' ){
+	for ( $i = 1; $i <= 24; $i++ ) { 
+	    $num = sprintf( "%02d", $i ); ?>
+		<option value="<?php echo esc_attr( $num ); ?>" <?php selected( $num, $selected ); ?>>
+			<?php echo esc_attr( $num ); ?>
+		</option>
+		<?php
+	}
+}
+
+function kar_get_min( $selected = '' ){
+	for ( $i = 1; $i <= 60; $i++ ) { 
+		$num = sprintf( "%02d", $i );  ?>
+		<option value="<?php echo esc_attr( $num ); ?>" <?php selected( $num, $selected ); ?>>
+			<?php echo esc_attr( $num ); ?>
+		</option>
+		<?php
+	}
+}
+
+function kar_get_time_field( $field, $default_value, $key, $extra_class, $show_default_value_on_add_new_repeater ){
+
+	$title           = !empty( $field['label'] ) ? $field['label'] : '';
+	$description     = !empty( $field['description'] ) ? $field['description'] : '';
+	$hour            = !empty( $field['default']['h'] ) ? $field['default']['h'] : '1';
+	$min             = !empty( $field['default']['m'] ) ? $field['default']['m'] : '1';
+	$active_callback = !empty( $field['active_callback'] ) ? 'data-active-callback=' . json_encode( $field['active_callback'] ) : '';
+
+	// Show this default value for hidden field
+	if( $show_default_value_on_add_new_repeater == true ){
+	 	$default_value['h'] = $hour;
+	 	$default_value['m'] = $min;
+	}
+
+	if( empty( $default_value['h'] ) ){
+		$default_value['h'] = 1;
+	}
+
+	if( empty( $default_value['m'] ) ){
+		$default_value['m'] = 1;
+	} ?>
+
+	<div 
+	class="fields" 
+	data-type="time" 
+	data-key="<?php echo esc_attr( $key ); ?>" 
+	<?php echo esc_attr( $active_callback ); ?>>
+
+		<label class="title">
+			<?php echo esc_html( $title ); ?>
+		</label>
+		<p class="description">
+			<?php echo esc_html( $description ); ?>
+		</p>
+
+		<div class="kar_timepicker_wrapper">
+			<select class="kar_time_hr <?php echo esc_attr( $extra_class ); ?>">
+				<?php kar_get_hours( $default_value['h'] ); ?>
+			</select>
+			<span class="kar_divider">:</span>
+			<select class="kar_time_min <?php echo esc_attr( $extra_class ); ?>">
+				<?php kar_get_min( $default_value['m'] ); ?>
+			</select>
 		</div>
 
 	</div>
