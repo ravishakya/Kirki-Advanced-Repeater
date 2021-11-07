@@ -4,7 +4,7 @@
 **Author URI  :** https://bizbergthemes.com  
 **License     :** GNU General Public License v2 or later  
 **License URI :** http://www.gnu.org/licenses/gpl-2.0.html  
-**Version     :** 0.1
+**Version     :** 0.2
 
 ## Description ##
 
@@ -27,12 +27,20 @@ Kirki::add_field( 'bizberg', array(
             'text_field'  => 'How are you',
             'content'=> 'This is an advanced repeater',
             'color_field' => '#000',
+            'event_time' => [
+                'h' => 05,
+                'm' => 10
+            ],
         ],
         [
             'custom_fields' => 'radio',
             'text_field'  => 'Good Morning',
             'content'=> 'Have a good day',
             'color_field'      => '#fff',
+            'event_time' => [
+                'h' => 15,
+                'm' => 59
+            ],
         ]
     ]),
     'choices' => [
@@ -56,7 +64,8 @@ Kirki::add_field( 'bizberg', array(
                     'radio'       => 'Radio',
                     'fontawesome' => 'Fontawesome',
                     'number'      => 'Number',
-                    'date'        => 'Date'
+                    'date'        => 'Date',
+                    'time'        => 'Time'
                 ],
             ],
             'color_option1' => [
@@ -314,7 +323,7 @@ Kirki::add_field( 'bizberg', array(
             ],	
             'date_field' => [
                 'type'        => 'heading',
-                'label'       => 'Number',
+                'label'       => 'Datepicker',
                 'choices'     => [
                     'background'  => 'purple'
                 ],
@@ -338,7 +347,36 @@ Kirki::add_field( 'bizberg', array(
                         'value'    => 'date'
                     ]
                 ],
-            ],		
+            ],	
+            'time_field' => [
+                'type'        => 'heading',
+                'label'       => 'Timepicker',
+                'choices'     => [
+                    'background'  => '#631c03'
+                ],
+                'active_callback' => [
+                    [
+                        'setting'  => 'custom_fields',
+                        'operator' => '==',
+                        'value'    => 'time'
+                    ]
+                ],
+            ],	
+            'event_time'  => [
+                'type'        => 'time',
+                'label'       => 'Time',
+                'default'     => [
+                    'h' => 12,
+                    'm' => 26
+                ],
+                'active_callback' => [
+                    [
+                        'setting'  => 'custom_fields',
+                        'operator' => '==',
+                        'value'    => 'time'
+                    ]
+                ],
+            ],	
         ]
     ]
 ) );
