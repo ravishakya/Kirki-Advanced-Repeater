@@ -108,7 +108,7 @@ if( !function_exists( 'bizberg_kar_customize_register' ) ){
 				if( $limit > 0 ){ ?>
 					<div class="kar_repeater_limit">
 						<?php 
-						printf( _n( 'Limit: %s row', 'Limit: %s rows', $limit ), $limit );
+						printf( _n( 'Limit: %s row', 'Limit: %s rows', $limit , 'bizberg' ), $limit );
 						?>
 					</div>
 					<?php
@@ -660,10 +660,10 @@ if( !function_exists( 'bizberg_kar_get_textarea_field' ) ){
 			<?php 
 			// For hidden input show another default value
 			if( $show_default_value_on_add_new_repeater == true ){ ?>
-				<textarea class="kar_textarea"><?php echo esc_attr( $default ); ?></textarea>
+				<textarea class="kar_textarea"><?php echo esc_html( $default ); ?></textarea>
 				<?php
 			} else { ?>
-				<textarea class="kar_textarea"><?php echo esc_attr( $default_value ); ?></textarea>
+				<textarea class="kar_textarea"><?php echo esc_html( $default_value ); ?></textarea>
 				<?php
 			} ?>
 			
